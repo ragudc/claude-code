@@ -4,6 +4,7 @@ import SwiftUI
 struct CourseListView: View {
     @StateObject private var viewModel = CourseListViewModel()
     @State private var showSearchBar = false
+    @State private var selectedCourseSlug: String? = nil
     
     var body: some View {
         NavigationView {
@@ -120,8 +121,17 @@ struct CourseListView: View {
                 // Course list - Changed from grid to vertical stack
                 LazyVStack(spacing: Spacing.spacing4) {
                     ForEach(viewModel.filteredCourses) { course in
-                        CourseCardView(course: course) {
-                            viewModel.selectCourse(course)
+                        ZStack {
+                            NavigationLink(
+                                destination: CourseDetailView(slug: course.slug),
+                                tag: course.slug,
+                                selection: $selectedCourseSlug
+                            ) { EmptyView() }
+                            .opacity(0)
+
+                            CourseCardView(course: course) {
+                                selectedCourseSlug = course.slug
+                            }
                         }
                         .accessibilityAddTraits(.isButton)
                     }

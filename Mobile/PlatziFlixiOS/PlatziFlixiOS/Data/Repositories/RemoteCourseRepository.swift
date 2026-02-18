@@ -34,6 +34,13 @@ final class RemoteCourseRepository: CourseRepository {
         let courseDetailDTO = try await networkService.request(endpoint, responseType: CourseDetailDTO.self)
         return CourseMapper.toDomain(courseDetailDTO)
     }
+
+    /// Fetches the full course detail (including classes) by slug from the remote API
+    func getCourseDetail(_ slug: String) async throws -> CourseDetail {
+        let endpoint = CourseAPIEndpoints.getCourseBySlug(slug)
+        let dto = try await networkService.request(endpoint, responseType: CourseDetailDTO.self)
+        return CourseDetailMapper.toDomain(dto)
+    }
     
     /// Fetches all courses with Result wrapper for error handling
     func getAllCoursesResult() async -> Result<[Course], Error> {

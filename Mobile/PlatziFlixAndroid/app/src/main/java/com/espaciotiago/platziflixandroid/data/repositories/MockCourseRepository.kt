@@ -1,6 +1,8 @@
 package com.espaciotiago.platziflixandroid.data.repositories
 
+import com.espaciotiago.platziflixandroid.domain.models.ClassItem
 import com.espaciotiago.platziflixandroid.domain.models.Course
+import com.espaciotiago.platziflixandroid.domain.models.CourseDetail
 import com.espaciotiago.platziflixandroid.domain.repositories.CourseRepository
 import kotlinx.coroutines.delay
 
@@ -50,12 +52,30 @@ class MockCourseRepository : CourseRepository {
     override suspend fun getAllCourses(): Result<List<Course>> {
         // Simulate network delay
         delay(1500)
-        
+
         // Simulate occasional failures for testing error states
         if (Math.random() < 0.1) { // 10% chance of failure
             return Result.failure(Exception("Error de conexión: No se pudo conectar al servidor"))
         }
-        
+
         return Result.success(mockCourses)
+    }
+
+    override suspend fun getCourseBySlug(slug: String): Result<CourseDetail> {
+        delay(1000)
+
+        val mockDetail = CourseDetail(
+            id = 1,
+            name = "Curso de Kotlin",
+            description = "Aprende Kotlin desde cero hasta convertirte en un desarrollador experto. Cubre desde conceptos básicos hasta programación avanzada.",
+            thumbnail = "https://static.platzi.com/media/achievements/badge-kotlin-2021.png",
+            slug = slug,
+            classes = listOf(
+                ClassItem(1, "Introducción a Kotlin", "Conoce la historia y ventajas de Kotlin sobre Java.", "introduccion-kotlin"),
+                ClassItem(2, "Variables y Tipos de Datos", "Aprende a declarar variables con val y var.", "variables-tipos"),
+                ClassItem(3, "Funciones y Lambdas", "Crea funciones de primera clase y lambdas.", "funciones-lambdas")
+            )
+        )
+        return Result.success(mockDetail)
     }
 } 

@@ -9,20 +9,25 @@ import Foundation
 
 /// Protocol defining the contract for course data operations
 protocol CourseRepository {
-    
+
     /// Fetches all courses from the data source
     /// - Returns: Array of courses or throws an error
     func getAllCourses() async throws -> [Course]
-    
+
     /// Fetches a specific course by its slug
     /// - Parameter slug: The unique identifier for the course
     /// - Returns: Course details or throws an error
     func getCourseBySlug(_ slug: String) async throws -> Course
-    
+
+    /// Fetches the full detail of a course (including classes) by its slug
+    /// - Parameter slug: The unique identifier for the course
+    /// - Returns: CourseDetail with classes or throws an error
+    func getCourseDetail(_ slug: String) async throws -> CourseDetail
+
     /// Fetches all courses with Result wrapper
     /// - Returns: Result containing array of courses or error
     func getAllCoursesResult() async -> Result<[Course], Error>
-    
+
     /// Fetches a specific course by its slug with Result wrapper
     /// - Parameter slug: The unique identifier for the course
     /// - Returns: Result containing course details or error
