@@ -9,7 +9,8 @@ data class CourseListUiState(
     val isLoading: Boolean = false,
     val courses: List<Course> = emptyList(),
     val error: String? = null,
-    val isRefreshing: Boolean = false
+    val isRefreshing: Boolean = false,
+    val searchQuery: String = ""
 )
 
 /**
@@ -19,4 +20,5 @@ sealed class CourseListUiEvent {
     object LoadCourses : CourseListUiEvent()
     object RefreshCourses : CourseListUiEvent()
     object ClearError : CourseListUiEvent()
+    data class UpdateSearchQuery(val query: String) : CourseListUiEvent()
 } 

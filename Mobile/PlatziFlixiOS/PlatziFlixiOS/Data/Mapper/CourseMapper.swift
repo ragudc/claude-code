@@ -21,7 +21,9 @@ struct CourseMapper {
             teacherIds: dto.teacherId ?? [],
             createdAt: parseDate(dto.createdAt),
             updatedAt: parseDate(dto.updatedAt),
-            deletedAt: parseDate(dto.deletedAt)
+            deletedAt: parseDate(dto.deletedAt),
+            averageRating: nil,
+            totalRatings: nil
         )
     }
     
@@ -39,9 +41,11 @@ struct CourseMapper {
             thumbnail: dto.thumbnail,
             slug: dto.slug,
             teacherIds: dto.teacherId ?? [],
-            createdAt: nil, // Detail DTO doesn't include dates
+            createdAt: nil,
             updatedAt: nil,
-            deletedAt: nil
+            deletedAt: nil,
+            averageRating: nil,
+            totalRatings: nil
         )
     }
     

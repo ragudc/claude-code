@@ -17,7 +17,9 @@ object CourseMapper {
             name = courseDTO.name,
             description = courseDTO.description,
             thumbnail = courseDTO.thumbnail,
-            slug = courseDTO.slug
+            slug = courseDTO.slug,
+            averageRating = courseDTO.averageRating,
+            totalRatings = courseDTO.totalRatings
         )
     }
     

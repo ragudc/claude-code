@@ -31,5 +31,11 @@ data class CourseDTO(
     val deletedAt: String? = null,
     
     @SerializedName("teacher_id")
-    val teacherIds: List<Int>? = null
+    val teacherIds: List<Int>? = null,
+
+    @SerializedName("average_rating")
+    val averageRating: Float? = null,
+
+    @SerializedName("total_ratings")
+    val totalRatings: Int? = null
 ) 

@@ -1,5 +1,6 @@
 package com.espaciotiago.platziflixandroid.data.repositories
 
+import com.espaciotiago.platziflixandroid.domain.models.ClassDetail
 import com.espaciotiago.platziflixandroid.domain.models.ClassItem
 import com.espaciotiago.platziflixandroid.domain.models.Course
 import com.espaciotiago.platziflixandroid.domain.models.CourseDetail
@@ -77,5 +78,19 @@ class MockCourseRepository : CourseRepository {
             )
         )
         return Result.success(mockDetail)
+    }
+
+    override suspend fun getClassById(classId: Int): Result<ClassDetail> {
+        delay(800)
+        return Result.success(
+            ClassDetail(
+                id = classId,
+                name = "Introducción a Kotlin",
+                description = "Conoce la historia y ventajas de Kotlin sobre Java.",
+                slug = "introduccion-kotlin",
+                videoUrl = null,
+                duration = 0
+            )
+        )
     }
 } 

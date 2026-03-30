@@ -23,7 +23,9 @@ object CourseDetailMapper {
                     description = classDTO.description,
                     slug = classDTO.slug
                 )
-            } ?: emptyList()
+            } ?: emptyList(),
+            averageRating = dto.averageRating,
+            totalRatings = dto.totalRatings
         )
     }
 }

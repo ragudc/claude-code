@@ -10,8 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,15 +33,18 @@ import com.espaciotiago.platziflixandroid.ui.theme.Spacing
  *
  * @param classItem The class data to display
  * @param index The 1-based position of this class in the list
+ * @param onClick Callback when the item is clicked
  * @param modifier Modifier for styling
  */
 @Composable
 fun ClassListItem(
     classItem: ClassItem,
     index: Int,
+    onClick: (ClassItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
+        onClick = { onClick(classItem) },
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(CornerRadius.large),
         colors = CardDefaults.cardColors(
@@ -92,6 +98,12 @@ fun ClassListItem(
                     overflow = TextOverflow.Ellipsis
                 )
             }
+
+            Icon(
+                imageVector = Icons.Default.PlayArrow,
+                contentDescription = "Ver clase",
+                tint = MaterialTheme.colorScheme.primary
+            )
         }
     }
 }
@@ -107,7 +119,8 @@ fun ClassListItemPreview() {
                 description = "En esta clase aprenderás los conceptos fundamentales que necesitas para comenzar.",
                 slug = "introduccion"
             ),
-            index = 1
+            index = 1,
+            onClick = {}
         )
     }
 }

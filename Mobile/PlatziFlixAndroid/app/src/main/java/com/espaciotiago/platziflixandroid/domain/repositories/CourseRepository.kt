@@ -1,5 +1,6 @@
 package com.espaciotiago.platziflixandroid.domain.repositories
 
+import com.espaciotiago.platziflixandroid.domain.models.ClassDetail
 import com.espaciotiago.platziflixandroid.domain.models.Course
 import com.espaciotiago.platziflixandroid.domain.models.CourseDetail
 
@@ -20,4 +21,11 @@ interface CourseRepository {
      * @return Result containing the course detail or error
      */
     suspend fun getCourseBySlug(slug: String): Result<CourseDetail>
+
+    /**
+     * Retrieves a single class detail by its ID
+     * @param classId The numeric ID of the class
+     * @return Result containing the class detail or error
+     */
+    suspend fun getClassById(classId: Int): Result<ClassDetail>
 } 

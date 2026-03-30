@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.espaciotiago.platziflixandroid.di.AppModule
+import com.espaciotiago.platziflixandroid.presentation.classes.screen.ClassDetailScreen
+import com.espaciotiago.platziflixandroid.presentation.classes.viewmodel.ClassDetailViewModel
 import com.espaciotiago.platziflixandroid.presentation.courses.detail.screen.CourseDetailScreen
 import com.espaciotiago.platziflixandroid.presentation.courses.detail.viewmodel.CourseDetailViewModel
 import com.espaciotiago.platziflixandroid.presentation.courses.screen.CourseListScreen
@@ -15,7 +17,9 @@ import com.espaciotiago.platziflixandroid.presentation.courses.viewmodel.CourseL
 
 private const val ROUTE_COURSES = "courses"
 private const val ROUTE_COURSE_DETAIL = "courses/{slug}"
+private const val ROUTE_CLASS_DETAIL = "classes/{classId}"
 private const val ARG_SLUG = "slug"
+private const val ARG_CLASS_ID = "classId"
 
 /**
  * Root navigation graph for the PlatziFlixAndroid app
@@ -49,6 +53,23 @@ fun AppNavigation() {
                 AppModule.provideCourseDetailViewModel(slug)
             }
             CourseDetailScreen(
+                viewModel = viewModel,
+                onBack = { navController.popBackStack() },
+                onClassClick = { classItem ->
+                    navController.navigate("classes/${classItem.id}")
+                }
+            )
+        }
+
+        composable(
+            route = ROUTE_CLASS_DETAIL,
+            arguments = listOf(navArgument(ARG_CLASS_ID) { type = NavType.IntType })
+        ) { backStackEntry ->
+            val classId = backStackEntry.arguments?.getInt(ARG_CLASS_ID) ?: return@composable
+            val viewModel = viewModel<ClassDetailViewModel>(key = classId.toString()) {
+                AppModule.provideClassDetailViewModel(classId)
+            }
+            ClassDetailScreen(
                 viewModel = viewModel,
                 onBack = { navController.popBackStack() }
             )

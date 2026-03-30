@@ -2,6 +2,7 @@ package com.espaciotiago.platziflixandroid.presentation.courses.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,11 +11,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -78,12 +81,25 @@ fun CourseListScreen(
             )
         }
     ) { innerPadding ->
-        CourseListContent(
-            uiState = uiState,
-            onCourseClick = onCourseClick,
-            onRetry = { viewModel.handleEvent(CourseListUiEvent.LoadCourses) },
-            modifier = Modifier.padding(innerPadding)
-        )
+        Column(modifier = Modifier.padding(innerPadding)) {
+            OutlinedTextField(
+                value = uiState.searchQuery,
+                onValueChange = { viewModel.handleEvent(CourseListUiEvent.UpdateSearchQuery(it)) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Spacing.medium, vertical = Spacing.small),
+                placeholder = { Text("Buscar cursos...") },
+                leadingIcon = {
+                    Icon(imageVector = Icons.Default.Search, contentDescription = null)
+                },
+                singleLine = true
+            )
+            CourseListContent(
+                uiState = uiState,
+                onCourseClick = onCourseClick,
+                onRetry = { viewModel.handleEvent(CourseListUiEvent.LoadCourses) }
+            )
+        }
     }
 }
 
@@ -103,7 +119,7 @@ private fun CourseListContent(
                 modifier = modifier.fillMaxSize()
             )
         }
-        
+
         uiState.error != null && uiState.courses.isEmpty() -> {
             Box(
                 modifier = modifier
@@ -117,14 +133,17 @@ private fun CourseListContent(
                 )
             }
         }
-        
+
         uiState.courses.isEmpty() -> {
             Box(
                 modifier = modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "No hay cursos disponibles",
+                    text = if (uiState.searchQuery.isNotBlank())
+                        "Sin resultados para \"${uiState.searchQuery}\""
+                    else
+                        "No hay cursos disponibles",
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

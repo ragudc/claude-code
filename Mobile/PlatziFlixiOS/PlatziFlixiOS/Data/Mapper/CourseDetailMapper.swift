@@ -19,7 +19,9 @@ struct CourseDetailMapper {
                     description: classDTO.description,
                     slug: classDTO.slug
                 )
-            } ?? []
+            } ?? [],
+            averageRating: dto.averageRating,
+            totalRatings: dto.totalRatings
         )
     }
 }

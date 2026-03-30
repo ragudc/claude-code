@@ -40,8 +40,10 @@ struct CourseDetailDTO: Codable {
     let thumbnail: String
     let slug: String
     let teacherId: [Int]?
+    let averageRating: Double?
+    let totalRatings: Int?
     let classes: [ClassDTO]?
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -49,6 +51,8 @@ struct CourseDetailDTO: Codable {
         case thumbnail
         case slug
         case teacherId = "teacher_id"
+        case averageRating = "average_rating"
+        case totalRatings = "total_ratings"
         case classes
     }
 }

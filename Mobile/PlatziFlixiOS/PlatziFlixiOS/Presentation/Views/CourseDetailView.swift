@@ -111,6 +111,17 @@ struct CourseDetailView: View {
                 }
                 .padding(.horizontal, Spacing.spacing4)
 
+                // Ratings section
+                if let averageRating = courseDetail.averageRating,
+                   let totalRatings = courseDetail.totalRatings,
+                   totalRatings > 0 {
+                    ratingSectionView(averageRating: averageRating, totalRatings: totalRatings)
+                        .padding(.horizontal, Spacing.spacing4)
+                } else {
+                    ratingSectionView(averageRating: nil, totalRatings: nil)
+                        .padding(.horizontal, Spacing.spacing4)
+                }
+
                 // Classes section
                 if !courseDetail.classes.isEmpty {
                     VStack(alignment: .leading, spacing: Spacing.spacing4) {
@@ -133,6 +144,44 @@ struct CourseDetailView: View {
         .accessibilityLabel("Detalle del curso \(courseDetail.name)")
     }
 }
+
+    private func ratingSectionView(averageRating: Double?, totalRatings: Int?) -> some View {
+        VStack(alignment: .leading, spacing: Spacing.spacing3) {
+            Text("Calificaciones")
+                .font(.title2)
+                .foregroundColor(.primary)
+
+            if let avg = averageRating, let total = totalRatings {
+                StarRatingDisplayView(rating: avg, totalRatings: total)
+            }
+
+            Text(viewModel.userRating != nil ? "Tu calificación:" : "Califica este curso:")
+                .font(.bodyEmphasized)
+                .foregroundColor(.secondary)
+
+            if viewModel.isSubmittingRating {
+                ProgressView()
+            } else {
+                StarRatingInputView(
+                    currentRating: viewModel.userRating,
+                    onRatingSelected: { rating in viewModel.submitRating(rating) }
+                )
+                if viewModel.userRating != nil {
+                    Button("Eliminar calificación") {
+                        viewModel.deleteRating()
+                    }
+                    .font(.buttonSmall)
+                    .foregroundColor(.errorRed)
+                }
+            }
+
+            if let ratingError = viewModel.ratingError {
+                Text(ratingError)
+                    .font(.captionRegular)
+                    .foregroundColor(.errorRed)
+            }
+        }
+    }
 
 // MARK: - Previews
 #Preview("Normal State") {

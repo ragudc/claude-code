@@ -9,6 +9,8 @@ struct CourseDetail: Identifiable {
     let slug: String
     let teacherIds: [Int]
     let classes: [CourseDetailClass]
+    let averageRating: Double?
+    let totalRatings: Int?
 }
 
 /// Domain model representing a single class within a course detail
@@ -34,6 +36,8 @@ extension CourseDetail {
             CourseDetailClass(id: 3, name: "Estado con useState", description: "Gestiona el estado local de tus componentes con el hook useState.", slug: "estado-usestate"),
             CourseDetailClass(id: 4, name: "Efectos con useEffect", description: "Sincroniza tu UI con efectos secundarios usando useEffect.", slug: "efectos-useeffect"),
             CourseDetailClass(id: 5, name: "Contexto Global", description: "Comparte estado entre componentes usando Context API.", slug: "contexto-global")
-        ]
+        ],
+        averageRating: 4.5,
+        totalRatings: 120
     )
 }

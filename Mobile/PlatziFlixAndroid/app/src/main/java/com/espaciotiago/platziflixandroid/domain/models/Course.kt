@@ -8,5 +8,7 @@ data class Course(
     val name: String,
     val description: String,
     val thumbnail: String,
-    val slug: String
+    val slug: String,
+    val averageRating: Float? = null,
+    val totalRatings: Int? = null
 ) 

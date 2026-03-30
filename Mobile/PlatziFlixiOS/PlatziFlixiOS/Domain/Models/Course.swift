@@ -11,6 +11,8 @@ struct Course: Identifiable, Equatable {
     let createdAt: Date?
     let updatedAt: Date?
     let deletedAt: Date?
+    let averageRating: Double?
+    let totalRatings: Int?
     
     /// Computed property to check if course is active
     var isActive: Bool {
@@ -38,7 +40,9 @@ extension Course {
             teacherIds: [1, 2],
             createdAt: Date(),
             updatedAt: Date(),
-            deletedAt: nil
+            deletedAt: nil,
+            averageRating: nil,
+            totalRatings: nil
         ),
         Course(
             id: 5,
@@ -49,7 +53,9 @@ extension Course {
             teacherIds: [2, 3],
             createdAt: Date(),
             updatedAt: Date(),
-            deletedAt: nil
+            deletedAt: nil,
+            averageRating: nil,
+            totalRatings: nil
         ),
         Course(
             id: 6,
@@ -60,7 +66,9 @@ extension Course {
             teacherIds: [1, 4],
             createdAt: Date(),
             updatedAt: Date(),
-            deletedAt: nil
+            deletedAt: nil,
+            averageRating: nil,
+            totalRatings: nil
         ),
         Course(
             id: 7,
@@ -71,7 +79,9 @@ extension Course {
             teacherIds: [2],
             createdAt: Date(),
             updatedAt: Date(),
-            deletedAt: nil
+            deletedAt: nil,
+            averageRating: nil,
+            totalRatings: nil
         ),
         Course(
             id: 8,
@@ -82,7 +92,9 @@ extension Course {
             teacherIds: [3, 5],
             createdAt: Date(),
             updatedAt: Date(),
-            deletedAt: nil
+            deletedAt: nil,
+            averageRating: nil,
+            totalRatings: nil
         ),
         Course(
             id: 9,
@@ -93,7 +105,9 @@ extension Course {
             teacherIds: [4, 6],
             createdAt: Date(),
             updatedAt: Date(),
-            deletedAt: nil
+            deletedAt: nil,
+            averageRating: nil,
+            totalRatings: nil
         )
     ]
 } 
