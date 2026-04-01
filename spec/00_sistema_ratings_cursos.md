@@ -454,3 +454,42 @@ describe('StarRating Component', () => {
 ---
 
 *Este plan sigue estrictamente los patrones arquitecturales existentes de Platziflix y está diseñado para ser implementado incrementalmente, manteniendo la estabilidad del sistema en cada fase.*
+
+---
+
+## Apéndice: ¿Cómo funciona un LLM?
+
+Un **Large Language Model (LLM)** es una red neuronal entrenada para predecir el siguiente token (palabra o fragmento de texto) dado un contexto previo. No "entiende" el lenguaje en sentido humano — aprende patrones estadísticos de enormes corpus de texto.
+
+### Ejemplo mínimo: predicción de tokens
+
+Dado el prompt:
+
+```
+"El rating promedio del curso es"
+```
+
+El modelo calcula una distribución de probabilidad sobre el vocabulario:
+
+```
+"4.5"    → 32%
+"alto"   → 18%
+"3.8"    → 12%
+"bueno"  → 9%
+...
+```
+
+Selecciona el token más probable (o samplea según temperatura) y lo agrega al contexto:
+
+```
+"El rating promedio del curso es 4.5"
+```
+
+Luego repite el proceso con el nuevo contexto hasta generar una respuesta completa.
+
+### Por qué importa para este proyecto
+
+Al integrar un LLM en Platziflix (ej: recomendaciones basadas en ratings), hay que tener en cuenta:
+- **El modelo no accede a la DB en tiempo real** — necesita herramientas (function calling) para consultar los ratings.
+- **El contexto es limitado** — no se puede pasar todo el historial de ratings; hay que resumir o filtrar.
+- **Las respuestas son probabilísticas** — validar siempre la salida antes de usarla en la UI.
